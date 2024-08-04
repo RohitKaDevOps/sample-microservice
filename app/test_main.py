@@ -7,7 +7,7 @@ class BasicTestCase(unittest.TestCase):
         self.app.testing = True
 
     def test_hello(self):
-        response = self.app.get('/hello')
+        response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, b'Hello, World!')
 
