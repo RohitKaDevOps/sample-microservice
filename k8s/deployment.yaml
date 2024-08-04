@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sample-microservice
-        image: rohitkadevops/sample-microservice:13
+        image: rohitkadevops/sample-microservice:latest
         ports:
         - containerPort: 8080
 ---
