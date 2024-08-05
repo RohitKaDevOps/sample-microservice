@@ -1,0 +1,29 @@
+---
+- name: Deploy configuration to local Minikube cluster
+  hosts: kube_nodes
+  tasks:
+    - name: Ensure the Kubernetes configuration directory exists
+      file:
+        path: /etc/kubernetes/config
+        state: directory
+
+    - name: Copy the application configuration file
+      copy:
+        src: ../k8s/deployment.yaml
+        dest: /etc/kubernetes/config/deployment.yaml
+        
+    - name: Apply Kubernetes configuration
+      command: kubectl apply -f /etc/kubernetes/config/deployment.yaml
+      args:
+        chdir: /etc/kubernetes/config
+      register: result
+      changed_when: "'created' in result.stdout or 'configured' in result.stdout"
+
+    - name: Check deployment status
+      command: kubectl rollout status deployment/sample-microservice-deployment
+      args:
+        chdir: /etc/kubernetes/config
+      register: rollout_status
+      until: rollout_status.rc == 0
+      retries: 5
+      delay: 10
