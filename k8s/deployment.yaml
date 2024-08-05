@@ -16,7 +16,7 @@ spec:
       - name: sample-microservice
         image: rohitkadevops/sample-microservice:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
